@@ -1,0 +1,193 @@
+<div class="toolbar">
+  <button (click)="addQuestion()" *ngIf="editMode" class="btn btn-info">Agregar
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+      <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+      <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    </svg></button>
+  <button (click)="test()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Probar
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd"
+        d="M10.804 8L5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+    </svg>
+  </button>
+  <button (click)="validateForm()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Validar
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-triangle" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd"
+        d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+      <path
+        d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+    </svg></button>
+  <button (click)="save()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Guardar
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-check" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd"
+        d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+      <path fill-rule="evenodd"
+        d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z" />
+    </svg>
+  </button>
+  <button (click)="editMode = true" *ngIf="!editMode" class="btn btn-info">Editar
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+      <path fill-rule="evenodd"
+        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+    </svg></button>
+</div>
+<div class="editor form-group" *ngIf="editMode">
+  <div class="alert alert-warning" *ngIf="errors.size > 0">
+    <div *ngFor="let error of errors  | keyvalue" (click)="goToQuestion(error.value)"
+    class="error">{{error.key}}</div>
+  </div>
+  <div class="alert alert-success" *ngIf="showValid">
+    Formulario válido.
+  </div>
+<div *ngFor="let question of questions" class="question" (click)="select(question)" id="question-{{question.order}}"
+  [ngClass]="{'selected': question.selected}">
+
+    <div *ngIf="question.selected" >
+      <div class="header">
+        <div class="label">
+          <div class="form-group">
+            <label for="help">Etiqueta</label>
+            <input required [(ngModel)]="question.label" type="text" style="width: 90%" class="form-control">
+          </div>
+        </div>
+        <div class="type form-group">
+          <label for="help">Tipo</label>
+          <select required style="width: 100%" [(ngModel)]="question.controlType"  class="custom-select">
+            <option value="dropdown">Opciones</option>
+            <option value="checkbox">Checkbox</option>
+            <option value="textbox">Texto corto</option>
+            <option value="textboxarea">Texto largo</option>
+            <option value="number">Número</option>
+            <option value="date">Fecha</option>
+            <option value="time">Hora</option>
+            <option value="scale">Escala</option>
+            <option value="multiple">Selección múltiple</option>
+            <option value="separator">Separador</option>
+            <option value="text">Instrucciones</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="question.controlType === 'text'" class="component">
+        <textarea required [(ngModel)]="question.text" rows="4" style="width: 99%" placeholder="Instrucciones"
+          class="form-control"></textarea>
+      </div>
+
+      <div *ngIf="question.controlType === 'scale' || question.controlType === 'number'" class="options">
+        <div class="form-group">
+          <label for="help">Mínimo</label>
+          <input [(ngModel)]="question.min" type="number" style="width: 100%" class="form-control" id="min">
+        </div>
+        <div class="form-group">
+          <label for="help">Máximo</label>
+          <input [(ngModel)]="question.max" type="number" style="width: 100%" class="form-control" id="max">
+        </div>
+      </div>
+      <div *ngIf="question.controlType === 'dropdown' || question.controlType === 'multiple'" class="options">
+        <span>Opciones</span>
+
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let opt of question.options">
+
+            <input type="text" required [(ngModel)]="opt.value" class="form-control"
+              style="width: 200px;display: inline;">
+            <button (click)="removeOption(question, opt.value)" class="btn btn-danger">Eliminar</button>
+          </li>
+        </ul>
+        <div>
+          <button (click)="addOption(question)" class="btn btn-primary">Agregar</button>
+        </div>
+      </div>
+      <div class="properties" *ngIf="question.controlType != 'separator' &&  question.controlType != 'text' ">
+
+        <div class="form-group">
+          <label for="help">Ayuda</label>
+          <input [(ngModel)]="question.placeholder" type="text" style="width: 100%" class="form-control" id="help"
+            aria-describedby="helpHelp">
+          <small id="helpHelp" class="form-text text-muted">Se mostrará una ayuda como esta.</small>
+        </div>
+        <div class="form-group">
+          <label for="help">Clave</label>
+          <input required [(ngModel)]="question.key" type="text" class="form-control" id="key"
+            aria-describedby="keyHelp">
+          <small id="keyHelp" class="form-text text-muted">Debe ser único en el formulario.</small>
+        </div>
+        <div *ngIf="question.controlType === 'textbox'" class="form-group">
+          <label for="help">Patrón</label>
+          <input [(ngModel)]="question.pattern" type="text" class="form-control" id="pattern"
+            aria-describedby="patternHelp">
+          <small id="patternHelp" class="form-text text-muted">Expresión regular para validar el campo.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="help">Condición</label>
+          <input [(ngModel)]="question.condition" type="text" class="form-control" id="condition"
+            aria-describedby="conditionHelp">
+          <small id="conditionHelp" class="form-text text-muted">Condición para que se muestre el campo:
+            claveComponente=valor.</small>
+        </div>
+
+        <div class="custom-control custom-switch"
+          *ngIf="question.controlType !== 'checkbox' &&  question.controlType !== 'multiple'">
+          <input type="checkbox" [(ngModel)]="question.required" class="custom-control-input" id="customSwitch1">
+          <label class="custom-control-label" for="customSwitch1">Obligatorio</label>
+        </div>
+        <div class="custom-control custom-switch">
+        <input type="checkbox" [(ngModel)]="question.indexable" class="custom-control-input" id="customSwitch2">
+        <label class="custom-control-label" for="customSwitch2">Indexable</label>
+      </div>
+      </div>
+    </div>
+    <div class="component">
+      <lib-formy [questions]="[question]"></lib-formy>
+    </div>
+    <div *ngIf="question.selected">
+      <button (click)="upQuestion(question)" class="btn btn-info" *ngIf="question.order !== 0">Arriba
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z" />
+          <path fill-rule="evenodd"
+            d="M7.646 2.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8 3.707 5.354 6.354a.5.5 0 1 1-.708-.708l3-3z" />
+        </svg>
+      </button>
+      <button (click)="downQuestion(question)" class="btn btn-info"
+        *ngIf="question.order !== questions.length -1 ">Abajo
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M4.646 9.646a.5.5 0 0 1 .708 0L8 12.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z" />
+          <path fill-rule="evenodd" d="M8 2.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0V3a.5.5 0 0 1 .5-.5z" />
+        </svg>
+      </button>
+    </div>
+    <div *ngIf="question.selected" style="text-align: right;">
+      <button (click)="removeQuestion(question)" class="btn btn-danger">Eliminar
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+          <path fill-rule="evenodd"
+            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="editor" *ngIf="!editMode">
+  <div class="alert alert-warning" *ngIf="!testValid">
+    Formulario invalido
+  </div>
+  <div class="alert alert-success" *ngIf="testValid">
+    Formulario valido
+  </div>
+  <lib-formy [questions]="testQuestions" (onChange)="changeAnswers($event)"></lib-formy>
+</div>

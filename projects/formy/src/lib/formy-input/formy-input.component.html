@@ -1,0 +1,77 @@
+<div [formGroup]="form" style="margin-top: 10px">
+
+  <div [ngSwitch]="question.controlType" class="form-group">
+
+    <label [attr.for]="question.key"
+      *ngIf="question.controlType !== 'separator' && question.controlType !== 'checkbox'">{{question.label}}</label>
+
+    <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type"
+      [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
+      [pattern]="question.pattern" style="width: 100%" class="form-control">
+
+    <input *ngSwitchCase="'number'" [formControlName]="question.key" [id]="question.key" [type]="'number'"
+      [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
+      [min]="question.min" [max]="question.max" style="width: 100%" class="form-control">
+
+    <input *ngSwitchCase="'date'" [formControlName]="question.key" [id]="question.key" [type]="'date'"
+      [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
+      style="width: 100%" class="form-control">
+
+    <input *ngSwitchCase="'time'" [formControlName]="question.key" [id]="question.key" [type]="'time'"
+      [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
+      style="width: 100%" class="form-control">
+
+
+    <textarea *ngSwitchCase="'textboxarea'" [formControlName]="question.key" [id]="question.key" style="width: 100%"
+      [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
+      rows="4" class="form-control"> </textarea>
+
+    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" style="width: 100%"
+      class="custom-select"
+      [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}">
+      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+    </select>
+
+    <div *ngSwitchCase="'scale'">
+      <div class="custom-control custom-radio custom-control-inline" *ngFor="let num of numbers()">
+        <input type="radio" value="{{num}}" id="{{question.key + num}}" [formControlName]="question.key"
+          class="custom-control-input">
+        <label class="custom-control-label" for="{{question.key + num}}">{{num}}</label>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'multiple'">
+      <div class="custom-control custom-checkbox" *ngFor="let opt of question.options;let i = index">
+        <input type="checkbox" [id]="question.key+i" [formControlName]="question.key+i"
+          class="custom-control-input">
+        <label class="custom-control-label" [attr.for]="question.key+i" >{{opt.key}}</label>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'separator'" style="margin-top: 10px; font-size: 16px">
+      <span style="font-weight: bold">{{question.label}}</span>
+    </div>
+
+    <div *ngSwitchCase="'text'">
+      <span>{{question.text}}</span>
+    </div>
+
+    <small id="helpHelp" class="form-text text-muted" *ngIf="!!question.placeholder">{{question.placeholder}}</small>
+  </div>
+
+
+  <div class="custom-control custom-checkbox" *ngIf="question.controlType === 'checkbox'">
+    <input [formControlName]="question.key" [id]="question.key" type="checkbox" class="custom-control-input">
+    <label [attr.for]="question.key" class="custom-control-label">{{question.label}}</label>
+  </div>
+
+
+  <div
+    *ngIf="!!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched"
+    class="error">
+    <div [hidden]="!form.controls[question.key].errors.required">{{question.label}} requerido</div>
+    <div [hidden]="!form.controls[question.key].errors.pattern">{{question.label}} incorrecto</div>
+    <div [hidden]="!form.controls[question.key].errors.min">Valor mínimo {{question.min}}</div>
+    <div [hidden]="!form.controls[question.key].errors.max">Valor máximo {{question.max}}</div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div *ngIf="questions" class="questions">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <div *ngFor="let question of questions" style="width: 100%">
+      <app-formy-input [question]="question" [form]="form" *ngIf="checkCondition(question)"></app-formy-input>
+    </div>
+
+
+    <div *ngIf="!!form.errors"  class="alert alert-warning">
+      <div *ngIf="form.errors?.runDvValidator && (form.touched || form.dirty)">
+        El RUN y el DV no son válidos.
+      </div>
+    </div>
+  </form>
+</div>

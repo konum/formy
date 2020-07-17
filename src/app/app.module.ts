@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormyModule } from 'projects/formy/src/public_api';
+import { FormyModule } from '../../projects/formy/src/public_api';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({

@@ -112,7 +112,7 @@ export class AppComponent {
     },{
       type: '',
       controlType: 'multiple',
-      key: '2',
+      key: 'multiple',
       label: 'Opciones',
       options: [{key:'Multi 1',value:'Multi 1'},{key:'Multi 2',value:'Multi 2'}],
       order: 10,

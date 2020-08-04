@@ -58,7 +58,7 @@ ng serve
 
 Import Formy module
 ```
-import  {FormyModule} from 'formy';
+import  {FormyModule} from '@konum/formy';
 
 @NgModule({
   declarations: [....],

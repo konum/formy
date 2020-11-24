@@ -3,7 +3,7 @@
   <div [ngSwitch]="question.controlType" class="form-group">
 
     <label [attr.for]="question.key"
-      *ngIf="question.controlType !== 'separator' && question.controlType !== 'checkbox'">{{question.label}}</label>
+      *ngIf="question.controlType !== 'separator' && question.controlType !== 'checkbox'">{{question.label + (question.required?'*':'')}}</label>
 
     <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type"
       [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
@@ -29,7 +29,7 @@
     <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" style="width: 100%"
       class="custom-select"
       [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}">
-      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.key}}</option>
     </select>
 
     <div *ngSwitchCase="'scale'">
@@ -61,8 +61,9 @@
 
 
   <div class="custom-control custom-checkbox" *ngIf="question.controlType === 'checkbox'">
-    <input [formControlName]="question.key" [id]="question.key" type="checkbox" class="custom-control-input">
-    <label [attr.for]="question.key" class="custom-control-label">{{question.label}}</label>
+    <input [formControlName]="question.key" [id]="question.key" type="checkbox" class="custom-control-input" 
+    [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}">
+    <label [attr.for]="question.key" class="custom-control-label">{{question.label + (question.required?'*':'')}}</label>
   </div>
 
 

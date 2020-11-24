@@ -38,6 +38,9 @@
       <path fill-rule="evenodd"
         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
     </svg></button>
+
+    <button *ngIf="!editMode" class="btn btn-info" (click)="formy.checkForm()">Enviar
+     </button>
 </div>
 <div class="editor form-group" *ngIf="editMode">
   <div class="alert alert-warning" *ngIf="errors.size > 0">
@@ -97,9 +100,9 @@
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let opt of question.options">
 
-            <input type="text" required [(ngModel)]="opt.value" class="form-control"
+            <input type="text" required [(ngModel)]="opt.key" class="form-control"
               style="width: 200px;display: inline;">
-            <button (click)="removeOption(question, opt.value)" class="btn btn-danger">Eliminar</button>
+            <button (click)="removeOption(question, opt.key)" class="btn btn-danger">Eliminar</button>
           </li>
         </ul>
         <div>
@@ -135,15 +138,14 @@
             claveComponente=valor.</small>
         </div>
 
-        <div class="custom-control custom-switch"
-          *ngIf="question.controlType !== 'checkbox' &&  question.controlType !== 'multiple'">
+        <div class="custom-control custom-switch">
           <input type="checkbox" [(ngModel)]="question.required" class="custom-control-input" id="customSwitch1">
           <label class="custom-control-label" for="customSwitch1">Obligatorio</label>
         </div>
-        <div class="custom-control custom-switch">
+        <!-- <div class="custom-control custom-switch">
         <input type="checkbox" [(ngModel)]="question.indexable" class="custom-control-input" id="customSwitch2">
         <label class="custom-control-label" for="customSwitch2">Indexable</label>
-      </div>
+       </div> -->
       </div>
     </div>
     <div class="component">
@@ -189,5 +191,7 @@
   <div class="alert alert-success" *ngIf="testValid">
     Formulario valido
   </div>
-  <lib-formy [questions]="testQuestions" (onChange)="changeAnswers($event)"></lib-formy>
+  <lib-formy #formy [questions]="testQuestions" (onChange)="changeAnswers($event)"></lib-formy>
+
+  {{asJson()}}
 </div>

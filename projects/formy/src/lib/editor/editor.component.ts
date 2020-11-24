@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormyInputBase } from '../model/model';
+import { FormyComponent } from '../formy.component';
 @Component({
   selector: 'lib-formy-editor',
   templateUrl: './editor.component.html',
@@ -9,6 +10,7 @@ export class FormyEditorComponent implements OnInit{
   @Input() questions: FormyInputBase<any>[];
   @Input() questionsJson: string;
   @Output() onSave: EventEmitter<any> = new EventEmitter();
+  @ViewChild("formy",{static:false}) formy: FormyComponent;
   title = 'test-forms';
   testQuestions: FormyInputBase<any>[];
   selectedQuestion: FormyInputBase<any>;
@@ -74,7 +76,6 @@ export class FormyEditorComponent implements OnInit{
       question.value = '';
       switch (question.controlType) {
         case 'checkbox':
-          question.required = false;
           question.pattern = '';
           break;
         case 'dropdown':
@@ -90,8 +91,8 @@ export class FormyEditorComponent implements OnInit{
           break;
         case 'multiple':
           question.options.forEach(opt => {
-            if (!!opt.value) {
-              opt.key = opt.value;
+            if (!!opt.key) {
+              opt.value = undefined;
             } else {
               this.removeOption(question, '');
             }
@@ -147,6 +148,7 @@ export class FormyEditorComponent implements OnInit{
   }
 
   changeAnswers(event) {
+    console.log(event);
     this.testValid = !!event;
   }
 
@@ -180,7 +182,11 @@ export class FormyEditorComponent implements OnInit{
     question.options.push({ key: undefined, value: undefined });
   }
 
-  removeOption(question: FormyInputBase<any>, value) {
-    question.options = question.options.filter(p => p.value != value);
+  removeOption(question: FormyInputBase<any>, key) {
+    question.options = question.options.filter(p => p.key != key);
+  }
+
+  asJson(){
+    return JSON.stringify(this.questions);
   }
 }

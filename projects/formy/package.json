@@ -1,8 +1,12 @@
 {
-  "name": "formy",
-  "version": "0.0.1",
+  "name": "@konum/formy",
+  "version": "0.0.5",
   "peerDependencies": {
     "@angular/common": "^8.2.2",
     "@angular/core": "^8.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/konum/formy.git"
   }
 }

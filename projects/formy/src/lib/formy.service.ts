@@ -22,13 +22,16 @@ export class FormyService {
           validators.push( Validators.max(question.max));
         }
         if (question.required){
-          validators.push(Validators.required);
+          if (question.controlType === 'checkbox')
+            validators.push(Validators.requiredTrue);
+          else
+            validators.push(Validators.required);
         }
       if (question.controlType!=='multiple'){
           group[question.key] = new FormControl(question.value || '', validators);
       }else{
         question.options.forEach((opt,index) => {
-          group[question.key+index] = new FormControl(question.value || '', validators);
+          group[question.key+index] = new FormControl(opt.value || '', validators);
         });
       }
     });

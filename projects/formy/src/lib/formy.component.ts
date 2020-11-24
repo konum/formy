@@ -36,13 +36,23 @@ export class FormyComponent implements OnInit, OnChanges {
     this.form.valueChanges.subscribe(val => {
       if (this.form.valid) {
         this.questions.forEach(p => {
-          p.value = this.form.controls[p.key].value;
+          if (p.controlType === 'multiple'){
+            for (let index = 0; index < p.options.length; index++) {
+              p.options[index].value = this.form.controls[p.key+index].value;
+            }
+          }else{
+            p.value = this.form.controls[p.key].value;
+          }
         });
         this.onChange.emit(this.questions);
       } else {
         this.onChange.emit(undefined);
       }
     });
+  }
+
+  checkForm(){
+    this.form.markAllAsTouched();
   }
 
   ngOnChanges(changes: SimpleChanges) {

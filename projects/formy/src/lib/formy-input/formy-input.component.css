@@ -8,3 +8,7 @@
   color: #dc3545;
   display: block;
 }
+
+.is-invalid{
+  color: #dc3545;
+}

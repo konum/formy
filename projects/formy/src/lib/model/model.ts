@@ -7,7 +7,7 @@ export class FormyInputBase<T> {
   controlType: string;
   type: string;
   pattern?: string;
-  options: {key: string, value: string}[];
+  options: {key: string, value: any}[];
   condition?:string;
   selected?:boolean;
   indexable?:boolean;

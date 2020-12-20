@@ -1,8 +1,7 @@
 #!/bin/bash
 
-
-ng build formy
+rm -rf dist/formy
+ng build formy --prod
 cd dist/formy
-npm pack
-npm login -scope=@konum -registry=https://npm.pkg.github.com
+npm login
 npm publish

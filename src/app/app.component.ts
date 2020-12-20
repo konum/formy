@@ -24,9 +24,9 @@ export class AppComponent {
     controlType: 'multiple',
     key: 'multiple',
     label: 'Opciones',
-    options: [{key:'Multi 1',value:'Multi 1'},{key:'Multi 2',value:'Multi 2'}],
+    options: [{key:'Multi 1',value:false},{key:'Multi 2',value:false}],
     order: 10,
-    required: false,
+    required: true,
     value: ''
   }
   /*   {

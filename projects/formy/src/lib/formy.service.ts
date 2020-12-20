@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormyInputBase } from './model/model';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { RunDvValidatorDirective, runDvValidator } from './validators/runDv-validator.directive';
 
 @Injectable({
@@ -30,9 +30,11 @@ export class FormyService {
       if (question.controlType!=='multiple'){
           group[question.key] = new FormControl(question.value || '', validators);
       }else{
+        /* const arra = [];
         question.options.forEach((opt,index) => {
-          group[question.key+index] = new FormControl(opt.value || '', validators);
-        });
+          arra.push(new FormControl(opt.value || ''));
+        }); */
+        group[question.key] = new FormArray([], validators);
       }
     });
     const form = new FormGroup(group);

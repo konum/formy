@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { FormyInputBase } from './model/model';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormArray } from '@angular/forms';
 import { FormyService } from './formy.service';
 
 @Component({
@@ -37,8 +37,10 @@ export class FormyComponent implements OnInit, OnChanges {
       if (this.form.valid) {
         this.questions.forEach(p => {
           if (p.controlType === 'multiple'){
+            const checkArray: FormArray = this.form.get(p.key) as FormArray;
             for (let index = 0; index < p.options.length; index++) {
-              p.options[index].value = this.form.controls[p.key+index].value;
+              let option = checkArray.controls.filter((c: any)=>c.name === p.options[index].key)[0];
+              p.options[index].value = !!option;
             }
           }else{
             p.value = this.form.controls[p.key].value;
@@ -53,6 +55,7 @@ export class FormyComponent implements OnInit, OnChanges {
 
   checkForm(){
     this.form.markAllAsTouched();
+    return this.form.valid;
   }
 
   ngOnChanges(changes: SimpleChanges) {

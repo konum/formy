@@ -9,6 +9,7 @@ import { FormyComponent } from '../formy.component';
 export class FormyEditorComponent implements OnInit{
   @Input() questions: FormyInputBase<any>[];
   @Input() questionsJson: string;
+  @Input() debug =  false;
   @Output() onSave: EventEmitter<any> = new EventEmitter();
   @ViewChild("formy",{static:false}) formy: FormyComponent;
   title = 'test-forms';
@@ -92,12 +93,12 @@ export class FormyEditorComponent implements OnInit{
         case 'multiple':
           question.options.forEach(opt => {
             if (!!opt.key) {
-              opt.value = undefined;
+              opt.value = false;
             } else {
               this.removeOption(question, '');
             }
           });
-          question.required = false;
+        
           question.pattern = '';
           break;
         case 'separator':
@@ -147,9 +148,8 @@ export class FormyEditorComponent implements OnInit{
     }
   }
 
-  changeAnswers(event) {
-    console.log(event);
-    this.testValid = !!event;
+  validar() {
+    this.testValid = this.formy.checkForm();
   }
 
 

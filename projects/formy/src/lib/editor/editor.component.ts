@@ -9,8 +9,10 @@ import { FormyComponent } from '../formy.component';
 export class FormyEditorComponent implements OnInit{
   @Input() questions: FormyInputBase<any>[];
   @Input() questionsJson: string;
+  @Input() extended =  true;
   @Input() debug =  false;
   @Output() onSave: EventEmitter<any> = new EventEmitter();
+  @Output() questionsChange: EventEmitter<FormyInputBase<any>[]> = new EventEmitter();
   @ViewChild("formy",{static:false}) formy: FormyComponent;
   title = 'test-forms';
   testQuestions: FormyInputBase<any>[];
@@ -26,6 +28,10 @@ export class FormyEditorComponent implements OnInit{
     }else if (!this.questions){
       this.questions = [];
     }
+
+    setInterval(()=>{
+      this.questionsChange.emit(this.questions);
+    },1000)
   }
 
   validateForm(): boolean {

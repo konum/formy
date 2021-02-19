@@ -1,4 +1,4 @@
-<div class="toolbar">
+<div class="editor form-group toolbar">
   <button (click)="addQuestion()" *ngIf="editMode" class="btn btn-info">Agregar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
@@ -6,13 +6,13 @@
       <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
       <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
     </svg></button>
-  <button (click)="test()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Probar
+ <!--  <button (click)="test()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Probar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
         d="M10.804 8L5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
     </svg>
-  </button>
+  </button> -->
   <button (click)="validateForm()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Validar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-triangle" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +21,7 @@
       <path
         d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
     </svg></button>
-  <button (click)="save()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Guardar
+ <!--  <button (click)="save()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Guardar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-check" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
@@ -29,7 +29,7 @@
       <path fill-rule="evenodd"
         d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z" />
     </svg>
-  </button>
+  </button> -->
   <button (click)="editMode = true" *ngIf="!editMode" class="btn btn-info">Editar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
@@ -55,12 +55,6 @@
 
     <div *ngIf="question.selected" >
       <div class="header">
-        <div class="label">
-          <div class="form-group">
-            <label for="help">Etiqueta</label>
-            <input required [(ngModel)]="question.label" type="text" style="width: 90%" class="form-control">
-          </div>
-        </div>
         <div class="type form-group">
           <label for="help">Tipo</label>
           <select required style="width: 100%" [(ngModel)]="question.controlType"  class="custom-select">
@@ -78,7 +72,12 @@
           </select>
         </div>
       </div>
-
+      <div class="label">
+        <div class="form-group">
+          <label for="help">Etiqueta</label>
+          <input required [(ngModel)]="question.label" type="text" style="width: 90%" class="form-control">
+        </div>
+      </div>
       <div *ngIf="question.controlType === 'text'" class="component">
         <textarea required [(ngModel)]="question.text" rows="4" style="width: 99%" placeholder="Instrucciones"
           class="form-control"></textarea>
@@ -111,26 +110,26 @@
       </div>
       <div class="properties" *ngIf="question.controlType != 'separator' &&  question.controlType != 'text' ">
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="extended">
           <label for="help">Ayuda</label>
           <input [(ngModel)]="question.placeholder" type="text" style="width: 100%" class="form-control" id="help"
             aria-describedby="helpHelp">
           <small id="helpHelp" class="form-text text-muted">Se mostrará una ayuda como esta.</small>
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="extended">
           <label for="help">Clave</label>
           <input required [(ngModel)]="question.key" type="text" class="form-control" id="key"
             aria-describedby="keyHelp">
           <small id="keyHelp" class="form-text text-muted">Debe ser único en el formulario.</small>
         </div>
-        <div *ngIf="question.controlType === 'textbox'" class="form-group">
+        <div *ngIf="question.controlType === 'textbox' && extended" class="form-group">
           <label for="help">Patrón</label>
           <input [(ngModel)]="question.pattern" type="text" class="form-control" id="pattern"
             aria-describedby="patternHelp">
           <small id="patternHelp" class="form-text text-muted">Expresión regular para validar el campo.</small>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="extended">
           <label for="help">Condición</label>
           <input [(ngModel)]="question.condition" type="text" class="form-control" id="condition"
             aria-describedby="conditionHelp">
@@ -148,7 +147,7 @@
        </div> -->
       </div>
     </div>
-    <div class="component">
+    <div class="component" *ngIf="!question.selected">
       <lib-formy [questions]="[question]"></lib-formy>
     </div>
     <div *ngIf="question.selected">

@@ -44,7 +44,7 @@
 
     <div *ngSwitchCase="'multiple'">
       <div *ngFor="let data of options; let i=index"  class="custom-control custom-checkbox" >
-        <input  [id]="question.key+i" type="checkbox" class="custom-control-input"  [value]="data.value" (change)="onCheckboxChange(data.name,$event)" />
+        <input  [id]="question.key+i" type="checkbox" class="custom-control-input"  [checked]="data.value" (change)="onCheckboxChange(data.name,$event)" />
         <label [attr.for]="question.key+i" class="custom-control-label">
           {{data.name}}
         </label>

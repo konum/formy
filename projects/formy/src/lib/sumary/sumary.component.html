@@ -1,0 +1,69 @@
+<div *ngFor="let question of sumary | keyvalue" style="width: 100%">
+    <div style="margin-top: 10px">
+
+        <div [ngSwitch]="question.value.controlType" class="form-group">
+
+            <span style="font-weight: bold;">{{question.value.order}}. {{question.value.label}}</span>
+
+            <div *ngSwitchCase="'dropdown'">
+                <div *ngFor="let opt of question.value.answers | keyvalue">
+                    <span>{{opt.key}}</span> <span> - {{getPercentage(opt.value)}}%</span>
+                    <div class="outer">
+                        <div [ngStyle]="{'width': getPercentage(opt.value)+'%'}" class="percentage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'scale'">
+                <div *ngFor="let opt of question.value.answers | keyvalue">
+                    <span>{{opt.key}}</span> <span> - {{getPercentage(opt.value)}}%</span>
+                    <div class="outer">
+                        <div [ngStyle]="{'width': getPercentage(opt.value)+'%'}" class="percentage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'multiple'">
+                <div *ngFor="let opt of question.value.answers | keyvalue">
+                    <span>{{opt.key}}</span> <span> - {{getPercentage(opt.value)}}%</span>
+                    <div class="outer">
+                        <div [ngStyle]="{'width': getPercentage(opt.value)+'%'}" class="percentage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'date'">
+                <!--   <div *ngFor="let opt of question.value.answers | keyvalue">
+                    <span>{{opt.key | date:'dd-MM-yyyy'}}</span>
+                </div> -->
+                Las respuestas de fecha no están disponibles en el modo resumen.
+            </div>
+            <div *ngSwitchCase="'number'">
+                <div *ngFor="let opt of question.value.answers | keyvalue">
+                    <span>Media: {{getAverage(opt.value)}}</span>
+                </div>
+            </div>
+            <div *ngSwitchCase="'checkbox'">
+                <div *ngFor="let opt of question.value.answers | keyvalue">
+                    <span>{{getPercentage(opt.value)}}%</span>
+                    <div class="outer">
+                        <div [ngStyle]="{'width': getPercentage(opt.value)+'%'}" class="percentage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngSwitchCase="'textbox'">
+                <!--  <div *ngFor="let opt of question.value.answers | keyvalue">
+                    <span>{{opt.key}}</span><span *ngIf="opt.value"> - {{opt.value}}</span>
+                </div> -->
+                Las respuestas de texto no están disponibles en el modo resumen.
+            </div>
+            <div *ngSwitchCase="'hour'">
+                <!--  <div *ngFor="let opt of question.value.answers | keyvalue">
+                     <span>{{opt.key}}</span><span *ngIf="opt.value"> - {{opt.value}}</span>
+                 </div> -->
+                Las respuestas de hora no están disponibles en el modo resumen.
+            </div>
+        </div>
+    </div>
+</div>

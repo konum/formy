@@ -1,5 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
+<a [routerLink]="['/editor']">Editor</a>
+<a [routerLink]="['/sumary']">Resumen</a>
 
-<lib-formy-editor [questions]="questions"  (onSave)="save($event)" [debug]="true"></lib-formy-editor>
-
+<router-outlet></router-outlet>

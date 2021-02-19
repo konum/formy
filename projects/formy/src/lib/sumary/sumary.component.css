@@ -1,0 +1,9 @@
+.outer{
+    width: 250px;
+}
+
+.percentage{
+    padding: 2px; 
+    background-color: #009fff;
+    height: 15px;
+}

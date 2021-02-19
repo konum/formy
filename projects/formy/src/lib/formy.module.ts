@@ -5,6 +5,7 @@ import { FormyInputComponent } from './formy-input/formy-input.component';
 import { RunDvValidatorDirective } from './validators/runDv-validator.directive';
 import { FormyComponent } from './formy.component';
 import { FormyEditorComponent } from './editor/editor.component';
+import { FormySumaryComponent } from './sumary/sumary.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import { FormyEditorComponent } from './editor/editor.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  declarations: [FormyComponent,FormyInputComponent, RunDvValidatorDirective,FormyEditorComponent],
-  exports: [FormyComponent, FormyEditorComponent]
+  declarations: [FormyComponent,FormyInputComponent, RunDvValidatorDirective,FormyEditorComponent, FormySumaryComponent],
+  exports: [FormyComponent, FormyEditorComponent, FormySumaryComponent]
 })
 export class FormyModule { }

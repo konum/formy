@@ -1,0 +1,5 @@
+<button (click)="extended = true" *ngIf="!extended" class="btn btn-info" style="margin-left: 5px">Extendido</button>
+<button (click)="extended = true" *ngIf="extended" class="btn btn-info" style="margin-left: 5px">Basico</button>
+<lib-formy-editor [(questions)]="questions" [debug]="false" [extended]="extended"></lib-formy-editor>
+
+{{asJson()}}

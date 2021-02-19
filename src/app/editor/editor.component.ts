@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormyInputBase } from 'projects/formy/src/public_api';
-import { TestBed } from '@angular/core/testing';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-editor',
+  templateUrl: './editor.component.html',
+  styleUrls: ['./editor.component.css']
 })
-export class AppComponent {
+export class EditorComponent {
   result: FormyInputBase<any>;
   extended = false;
   jsonTest = '[{"type":"","controlType":"scale","key":"10","label":"Escala","order":0,"required":true,"value":"","placeholder":"Esto es una ayuda.","min":1,"max":5,"selected":false},{"type":"text","controlType":"textbox","key":"1","label":"Texto corto","order":1,"required":true,"value":"","placeholder":"Esto es una ayuda.","pattern":"[a-zA-Z]","selected":true,"indexable":true},{"type":"","controlType":"dropdown","key":"2","label":"Opciones","options":[{"key":"Valor 1","value":"Valor 1"},{"key":"Valor 2","value":"Valor 2"}],"order":2,"required":true,"value":"","selected":false,"pattern":""},{"type":"","controlType":"checkbox","key":"3","label":"Checkbox","order":3,"required":false,"value":"","selected":false,"pattern":""},{"type":"","controlType":"textboxarea","key":"4","label":"Textboxarea","order":4,"required":true,"value":"","selected":false},{"type":"","controlType":"text","key":"9","label":"Instrucciones","order":5,"required":false,"value":"","text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor erat leo, sed convallis urna venenatis quis. Fusce et cursus massa. Pellentesque vehicula, nulla vel fermentum ultricies, dui libero. ","selected":false,"pattern":""},{"type":"","controlType":"number","key":"5","label":"Numero","order":6,"required":true,"value":"","selected":false},{"type":"","controlType":"date","key":"6","label":"Fecha","order":7,"required":true,"value":"","selected":false},{"type":"","controlType":"time","key":"7","label":"Time","order":8,"required":true,"value":"","selected":false},{"type":"","controlType":"separator","key":"8","label":"Separador","order":9,"required":false,"value":"","selected":false,"pattern":""}]';
@@ -147,4 +146,5 @@ export class AppComponent {
   asJson(){
     return JSON.stringify(this.questions);
   }
+
 }

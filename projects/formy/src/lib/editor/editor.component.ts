@@ -6,14 +6,14 @@ import { FormyComponent } from '../formy.component';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css']
 })
-export class FormyEditorComponent implements OnInit{
+export class FormyEditorComponent implements OnInit {
   @Input() questions: FormyInputBase<any>[];
   @Input() questionsJson: string;
-  @Input() extended =  true;
-  @Input() debug =  false;
+  @Input() extended = true;
+  @Input() debug = false;
   @Output() onSave: EventEmitter<any> = new EventEmitter();
   @Output() questionsChange: EventEmitter<FormyInputBase<any>[]> = new EventEmitter();
-  @ViewChild("formy",{static:false}) formy: FormyComponent;
+  @ViewChild("formy", { static: false }) formy: FormyComponent;
   title = 'test-forms';
   testQuestions: FormyInputBase<any>[];
   selectedQuestion: FormyInputBase<any>;
@@ -22,16 +22,16 @@ export class FormyEditorComponent implements OnInit{
   showValid = false;
   testValid = true;
 
-  ngOnInit(){
-    if (!this.questions && !!this.questionsJson){
+  ngOnInit() {
+    if (!this.questions && !!this.questionsJson) {
       this.questions = JSON.parse(this.questionsJson);
-    }else if (!this.questions){
+    } else if (!this.questions) {
       this.questions = [];
     }
 
-    setInterval(()=>{
+    setInterval(() => {
       this.questionsChange.emit(this.questions);
-    },1000)
+    }, 1000)
   }
 
   validateForm(): boolean {
@@ -78,6 +78,19 @@ export class FormyEditorComponent implements OnInit{
     return this.errors.size === 0;
   }
 
+  clearValues() {
+    this.questions.forEach(p => {
+      p.value = undefined;
+      if (!!p.options) {
+        p.options.forEach(opt => {
+          if (!!opt.key) {
+            opt.value = false;
+          }
+        });
+      }
+    });
+  }
+
   checkQuestions() {
     this.questions.forEach(question => {
       question.value = '';
@@ -104,7 +117,7 @@ export class FormyEditorComponent implements OnInit{
               this.removeOption(question, '');
             }
           });
-        
+
           question.pattern = '';
           break;
         case 'separator':
@@ -192,7 +205,7 @@ export class FormyEditorComponent implements OnInit{
     question.options = question.options.filter(p => p.key != key);
   }
 
-  asJson(){
+  asJson() {
     return JSON.stringify(this.questions);
   }
 }

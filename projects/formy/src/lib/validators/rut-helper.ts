@@ -1,3 +1,5 @@
+import { isEmptyExpression } from "@angular/compiler";
+
 export function rutClean(value: string) {
     if (typeof value === 'string') {
       return value
@@ -12,7 +14,13 @@ export function rutClean(value: string) {
     if (typeof value !== 'string') {
       return false;
     }
-  
+    if (value.includes('.')){
+      return false;
+    }
+    if (!value.includes('-')){
+      return false;
+    }
+    
     const rut: string = rutClean(value);
     let rutDigits: number = parseInt(rut.slice(0, -1), 10);
     let m: number = 0;

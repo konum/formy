@@ -3,7 +3,8 @@
 .editor{
   width: 700px;
   margin: auto;
-  margin-top: 55px;
+  margin-top: 10px;
+  font-family: Arial;
 }
 
 .header{
@@ -28,6 +29,10 @@ padding-bottom: 7px;
   padding-bottom: 7px;
 }
 
+.regexHelp:hover{
+  text-decoration: underline !important;
+  cursor: pointer;
+}
 
 .component{
   display: flex;
@@ -69,6 +74,10 @@ padding-bottom: 7px;
 
 .selected{
   border-left: 5px solid #17a2b8;
+}
+
+.question-error{
+  border-left: 5px solid #e73d3d;
 }
 
 .error{

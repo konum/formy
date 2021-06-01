@@ -73,7 +73,7 @@ export class FormyComponent implements OnInit, OnChanges {
     if (!this.form.controls[key]) {
       return true;
     }
-    const meetCondition = this.form.controls[key].value === value;
+    const meetCondition = `${this.form.controls[key].value}` === value;
     if (!meetCondition) {
       this.form.controls[question.key].setValidators(null);
       this.form.controls[question.key].updateValueAndValidity();

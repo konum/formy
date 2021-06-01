@@ -11,6 +11,7 @@ export class FormyEditorComponent implements OnInit {
   @Input() questionsJson: string;
   @Input() extended = true;
   @Input() debug = false;
+  @Input() disabledTypes: string[] = [];
   @Output() onSave: EventEmitter<any> = new EventEmitter();
   @Output() questionsChange: EventEmitter<FormyInputBase<any>[]> = new EventEmitter();
   @ViewChild("formy", { static: false }) formy: FormyComponent;
@@ -21,17 +22,68 @@ export class FormyEditorComponent implements OnInit {
   editMode = true;
   showValid = false;
   testValid = true;
-
+  regexHelp = false;
+  types = [
+    {
+      value: 'dropdown',
+      label: 'Opciones'
+    },
+    {
+      value: 'checkbox',
+      label: 'Checkbox'
+    },
+    {
+      value: 'textbox',
+      label: 'Texto corto'
+    }, {
+      value: 'number',
+      label: 'Número'
+    },
+    {
+      value: 'date',
+      label: 'Fecha'
+    },
+    {
+      value: 'time',
+      label: 'Hora'
+    },
+    {
+      value: 'scale',
+      label: 'Escala'
+    },
+    {
+      value: 'multiple',
+      label: 'Selección múltiple'
+    },
+    {
+      value: 'separator',
+      label: 'Separador'
+    },
+    {
+      value: 'text',
+      label: 'Instrucciones'
+    },
+    {
+      value: 'rut',
+      label: 'Rut'
+    },
+    {
+      value: 'email',
+      label: 'Email'
+    }
+  ]
   ngOnInit() {
     if (!this.questions && !!this.questionsJson) {
       this.questions = JSON.parse(this.questionsJson);
     } else if (!this.questions) {
       this.questions = [];
     }
-
-    setInterval(() => {
-      this.questionsChange.emit(this.questions);
-    }, 1000)
+    this.disabledTypes.forEach(p=>{
+      this.types = this.types.filter(type=>type.value !== p);
+    });
+    /*     setInterval(() => {
+          this.questionsChange.emit(this.questions);
+        }, 1000) */
   }
 
   validateForm(): boolean {
@@ -39,30 +91,37 @@ export class FormyEditorComponent implements OnInit {
     this.checkQuestions();
     this.questions.forEach(question => {
       if (!question.key) {
+        question.error = true;
         this.errors.set(`La clave es obligatoria`, question);
         return;
       } if (!question.label) {
+        question.error = true;
         this.errors.set(`${question.key} le falta etiqueta.`, question);
         return;
       }
       if (!question.controlType) {
+        question.error = true;
         this.errors.set(`${question.key} el tipo es obligatorio.`, question);
       }
       if (this.questions.filter(p => p.key === question.key).length > 1) {
+        question.error = true;
         this.errors.set(`Clave ${question.key} duplicada`, question);
       }
       if (!!question.condition) {
         const key = question.condition.split('=')[0];
         const value = question.condition.split('=')[1];
         if (this.questions.filter(p => p.key === key).length != 1) {
+          question.error = true;
           this.errors.set(`Falta el componente ${key}  de la condición "${question.condition}".`, question);
         }
         if (!value) {
+          question.error = true;
           this.errors.set(`Falta un valor a la condición "${question.condition}"`, question);
         }
       }
 
       if (question.controlType === 'dropdown' && (!question.options || question.options.length === 0)) {
+        question.error = true;
         this.errors.set(`Faltan opciones en el componentente ${question.key}`, question);
       }
 
@@ -70,6 +129,7 @@ export class FormyEditorComponent implements OnInit {
         try {
           let regex = new RegExp(question.pattern);
         } catch (error) {
+          question.error = true;
           this.errors.set(`El patrón de ${question.key} es inválido.`, question);
         }
       }
@@ -97,6 +157,8 @@ export class FormyEditorComponent implements OnInit {
       switch (question.controlType) {
         case 'checkbox':
           question.pattern = '';
+          question.min = undefined;
+          question.max = undefined;
           break;
         case 'dropdown':
           question.options.forEach(opt => {
@@ -107,7 +169,8 @@ export class FormyEditorComponent implements OnInit {
             }
           });
           question.pattern = '';
-
+          question.min = undefined;
+          question.max = undefined;
           break;
         case 'multiple':
           question.options.forEach(opt => {
@@ -119,6 +182,8 @@ export class FormyEditorComponent implements OnInit {
           });
 
           question.pattern = '';
+          question.min = undefined;
+          question.max = undefined;
           break;
         case 'separator':
           question.required = false;
@@ -128,6 +193,21 @@ export class FormyEditorComponent implements OnInit {
           question.required = false;
           question.pattern = '';
           break;
+        case 'textbox':
+          question.min = undefined;
+          question.max = undefined;
+          break;
+        case 'textboxarea':
+          question.min = undefined;
+          question.max = undefined;
+          break;
+        case 'rut':
+          question.pattern = '';
+          question.min = undefined;
+          question.max = undefined;
+          question.placeholder = 'Sin puntos y con guión'
+          break;
+
         default:
           break;
       }
@@ -158,6 +238,8 @@ export class FormyEditorComponent implements OnInit {
       element.selected = false;
     });
     question.selected = true;
+    question.error = false;
+    this.regexHelp = false;
   }
 
   test() {

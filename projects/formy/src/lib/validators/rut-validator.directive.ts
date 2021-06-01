@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { NG_VALIDATORS, ValidatorFn, AbstractControl, FormControlDirective, FormControl, Validator } from '@angular/forms';
+import { NG_VALIDATORS, ValidatorFn, AbstractControl, FormControlDirective, FormControl, Validator, ValidationErrors } from '@angular/forms';
 import { rutValidate } from './rut-helper';
 
 @Directive({
@@ -12,21 +12,19 @@ export class RutValidatorDirective implements Validator {
 
   validator: ValidatorFn;
   constructor() {
-    this.validator = rutValidator();
+    
   }
 
   validate(c: FormControl) {
-    return this.validator(c);
+    return rutValidator(c);
   }
 }
 
-export function rutValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
+export function rutValidator(control: AbstractControl): ValidationErrors | null{
     let val: string = control.value;
     if (!rutValidate(val)){
       return { 'rutValidator': { value: control.value } }
     }
     return null;
-  };
 }
 

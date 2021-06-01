@@ -16,7 +16,7 @@ export class FormyInputBase<T> {
   multiple?:string;
   min?:number;
   max?:number;
-
+  error?:boolean;
   constructor(options: {
       value?: T,
       key?: string,

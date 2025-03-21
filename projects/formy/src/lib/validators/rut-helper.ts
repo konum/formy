@@ -1,5 +1,3 @@
-import { isEmptyExpression } from "@angular/compiler";
-
 export function rutClean(value: string) {
     if (typeof value === 'string') {
       return value

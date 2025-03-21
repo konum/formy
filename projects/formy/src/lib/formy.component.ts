@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
-import { FormyInputBase } from './model/model';
-import { FormGroup, Validators, FormArray } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { FormyService } from './formy.service';
+import { FormyInputBase } from './model/model';
 
 @Component({
   selector: 'lib-formy',
@@ -56,6 +56,14 @@ export class FormyComponent implements OnInit, OnChanges {
   checkForm(){
     this.form.markAllAsTouched();
     return this.form.valid;
+  }
+  checkFormAndEmit(){
+    this.form.markAllAsTouched();
+    if (this.form.valid){
+      this.onChange.emit(this.questions);
+    } else {
+      this.onChange.emit(undefined);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

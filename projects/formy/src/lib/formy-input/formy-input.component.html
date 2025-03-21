@@ -4,7 +4,7 @@
 
     <label [attr.for]="question.key"
       [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
-      *ngIf="question.controlType !== 'separator' && question.controlType !== 'checkbox'">{{question.label + (question.required?'*':'')}}</label>
+      *ngIf="question.controlType !== 'separator' && question.controlType !== 'checkbox' && question.controlType !== 'image'">{{question.label + (question.required?'*':'')}}</label>
 
     <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type"
       [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}"
@@ -40,6 +40,8 @@
       [ngClass]="{'is-invalid': !!form.controls[question.key] && form.controls[question.key].errors && form.controls[question.key].touched}">
       <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.key}}</option>
     </select>
+  
+    <img *ngSwitchCase="'image'" [src]="question.url" style="width: 100%">
 
     <div *ngSwitchCase="'scale'">
       <div class="custom-control custom-radio custom-control-inline" *ngFor="let num of numbers()">

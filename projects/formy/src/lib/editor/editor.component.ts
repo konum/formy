@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnInit } from '@angular/core';
-import { FormyInputBase } from '../model/model';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormyComponent } from '../formy.component';
+import { FormyInputBase } from '../model/model';
 @Component({
   selector: 'lib-formy-editor',
   templateUrl: './editor.component.html',
@@ -23,6 +23,11 @@ export class FormyEditorComponent implements OnInit {
   showValid = false;
   testValid = true;
   regexHelp = false;
+  exportJson=false;
+  importJson=false;
+  copiado=false;
+  jsonInvalido=false;
+  jsonToImport='';
   types = [
     {
       value: 'dropdown',
@@ -35,6 +40,10 @@ export class FormyEditorComponent implements OnInit {
     {
       value: 'textbox',
       label: 'Texto corto'
+    },
+    {
+      value: 'textboxarea',
+      label: 'Texto largo'
     }, {
       value: 'number',
       label: 'Número'
@@ -70,6 +79,10 @@ export class FormyEditorComponent implements OnInit {
     {
       value: 'email',
       label: 'Email'
+    },
+    {
+      value: 'image',
+      label: 'Imágen externa'
     }
   ]
   ngOnInit() {
@@ -87,9 +100,13 @@ export class FormyEditorComponent implements OnInit {
   }
 
   validateForm(): boolean {
+    return this.validateQuestions(this.questions);
+  }
+
+  validateQuestions(questions:FormyInputBase<any>[]): boolean {
     this.errors.clear();
-    this.checkQuestions();
-    this.questions.forEach(question => {
+    this.checkQuestions(questions);
+    questions.forEach(question => {
       if (!question.key) {
         question.error = true;
         this.errors.set(`La clave es obligatoria`, question);
@@ -151,8 +168,8 @@ export class FormyEditorComponent implements OnInit {
     });
   }
 
-  checkQuestions() {
-    this.questions.forEach(question => {
+  checkQuestions(questions) {
+    questions.forEach(question => {
       question.value = '';
       switch (question.controlType) {
         case 'checkbox':
@@ -287,6 +304,29 @@ export class FormyEditorComponent implements OnInit {
     question.options = question.options.filter(p => p.key != key);
   }
 
+
+  importar(){
+    let questions;
+    try{
+    questions = JSON.parse(this.jsonToImport);
+    }catch(error){
+      this.jsonInvalido=true;
+      return;
+    }
+    this.jsonInvalido=false;
+    if (this.validateQuestions(questions)) {
+      this.questions = questions;
+      this.editMode = true;
+      this.importJson = false;
+    }
+  }
+
+  copyJson(){
+    navigator.clipboard.writeText(JSON.stringify(this.questions)).catch(() => {
+      console.error("Unable to copy text");
+    });
+    this.copiado=true;
+  }
   asJson() {
     return JSON.stringify(this.questions);
   }

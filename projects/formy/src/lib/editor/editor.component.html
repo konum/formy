@@ -1,19 +1,19 @@
 <div class="editor form-group toolbar">
-  <button (click)="addQuestion()" *ngIf="editMode" class="btn btn-info">Agregar
+  <button (click)="addQuestion()" *ngIf="editMode && !importJson && !exportJson" class="btn btn-info">Agregar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
       <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
       <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
     </svg></button>
-  <button (click)="test()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Probar
+  <button (click)="test()" *ngIf="editMode  && !importJson && !exportJson" class="btn btn-info" style="margin-left: 5px">Probar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
         d="M10.804 8L5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
     </svg>
   </button>
-  <button (click)="validateForm()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Validar
+  <button (click)="validateForm()" *ngIf="editMode  && !importJson && !exportJson" class="btn btn-info" style="margin-left: 5px">Validar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-triangle" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
@@ -21,7 +21,7 @@
       <path
         d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
     </svg></button>
-  <button (click)="save()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Guardar
+  <button (click)="save()" *ngIf="editMode  && !importJson && !exportJson" class="btn btn-info" style="margin-left: 5px">Guardar
     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-check" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
@@ -38,7 +38,7 @@
       <path fill-rule="evenodd"
         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
     </svg></button>
-  <button (click)="extended = true;" *ngIf="editMode && !extended" class="btn btn-info"
+  <button (click)="extended = true;" *ngIf="editMode && !extended  && !importJson && !exportJson" class="btn btn-info"
     style="margin-left: 5px">Avanzado
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
       viewBox="0 0 16 16">
@@ -48,7 +48,7 @@
         d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
     </svg>
   </button>
-  <button (click)="extended = false;" *ngIf="editMode && extended" class="btn btn-info" style="margin-left: 5px">Básico
+  <button (click)="extended = false;" *ngIf="editMode && extended  && !importJson && !exportJson" class="btn btn-info" style="margin-left: 5px">Básico
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square"
       viewBox="0 0 16 16">
       <path
@@ -56,10 +56,22 @@
       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
     </svg>
   </button>
+  <button (click)="exportJson = true;copiado=false;importJson=false" *ngIf="editMode && !importJson && !exportJson"  class="btn btn-info" style="margin-left: 5px">Exportar
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 576 512">
+      <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V288H216c-13.3 0-24 10.7-24 24s10.7 24 24 24H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zM384 336V288H494.1l-39-39c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l80 80c9.4 9.4 9.4 24.6 0 33.9l-80 80c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l39-39H384zm0-208H256V0L384 128z"/></svg>
+  </button>
+  <button (click)="importJson = true;exportJson=false;" *ngIf="editMode && !exportJson && !importJson"  class="btn btn-info" style="margin-left: 5px">Importar
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512">
+      <path d="M128 64c0-35.3 28.7-64 64-64H352V128c0 17.7 14.3 32 32 32H512V448c0 35.3-28.7 64-64 64H192c-35.3 0-64-28.7-64-64V336H302.1l-39 39c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l39 39H128V64zm0 224v48H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H128zM512 128H384V0L512 128z"/></svg>
+  </button>
+  <button (click)="exportJson = false;importJson=false;" *ngIf="exportJson || importJson" class="btn btn-info" style="margin-left: 5px">Cerrar
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512">
+      <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+  </button>
   <!-- <button *ngIf="!editMode" class="btn btn-info" (click)="validar()">Validar
      </button> -->
 </div>
-<div class="editor form-group" *ngIf="editMode">
+<div class="editor form-group" *ngIf="editMode && !importJson && !exportJson">
   <div class="alert alert-warning" *ngIf="errors.size > 0">
     <div *ngFor="let error of errors  | keyvalue" (click)="goToQuestion(error.value)" class="error">{{error.key}}</div>
   </div>
@@ -100,6 +112,12 @@
           <input [(ngModel)]="question.max" type="number" style="width: 100%" class="form-control" id="max">
         </div>
       </div>
+      <div *ngIf="question.controlType === 'image'" class="component">
+        <div class="form-group">
+          <label for="help">URL</label>
+        <input required [(ngModel)]="question.url" type="text" style="width: 90%" class="form-control">
+        </div>
+      </div>
       <div *ngIf="question.controlType === 'dropdown' || question.controlType === 'multiple'" class="options">
         <span>Opciones</span>
 
@@ -115,7 +133,7 @@
           <button (click)="addOption(question)" class="btn btn-primary">Agregar</button>
         </div>
       </div>
-      <div class="properties" *ngIf="question.controlType != 'separator' &&  question.controlType != 'text' ">
+      <div class="properties" *ngIf="question.controlType != 'separator' &&  question.controlType != 'text' && question.controlType !== 'image' ">
 
         <div class="form-group" *ngIf="extended">
           <label for="help">Ayuda</label>
@@ -233,6 +251,28 @@
   </div>
   <lib-formy #formy [questions]="testQuestions" (onChange)="validar()"></lib-formy>
 </div>
+
+<div class="editor" *ngIf="exportJson && editMode">
+  <div class="alert alert-success" *ngIf="copiado">
+    Copiado!
+  </div>
+  <button (click)="copyJson()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Copiar</button>
+<textarea required  rows="4" style="width: 99%" [value]="asJson()"
+class="form-control"></textarea>
+</div>
+
+<div class="editor" *ngIf="importJson && editMode">
+  <div class="alert alert-warning" *ngIf="jsonInvalido">
+    JSON inválido
+  </div>
+  <div class="alert alert-warning" *ngIf="errors.size > 0">
+    <div *ngFor="let error of errors  | keyvalue" class="error">{{error.key}}</div>
+  </div>
+  <textarea required  rows="4" style="width: 99%" [(ngModel)]="jsonToImport" placeholder="Pega aquí el JSON, y luego presiona el botón importar"
+  class="form-control"></textarea>
+  <button (click)="importar()" *ngIf="editMode" class="btn btn-info" style="margin-left: 5px">Importar</button>
+</div>
+  
 
 <div *ngIf="debug">
   {{asJson()}}

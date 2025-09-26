@@ -125,8 +125,13 @@ export class FormyEditorComponent implements OnInit {
         this.errors.set(`Clave ${question.key} duplicada`, question);
       }
       if (!!question.condition) {
-        const key = question.condition.split('=')[0];
-        const value = question.condition.split('=')[1];
+        let igualdad='=';
+        if (question.condition.includes('<='))
+          igualdad = '<='
+        if (question.condition.includes('>='))
+          igualdad = '>='
+        const key = question.condition.split(igualdad)[0];
+        const value = question.condition.split(igualdad)[1];
         if (this.questions.filter(p => p.key === key).length != 1) {
           question.error = true;
           this.errors.set(`Falta el componente ${key}  de la condición "${question.condition}".`, question);

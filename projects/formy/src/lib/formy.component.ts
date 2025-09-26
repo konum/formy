@@ -23,10 +23,10 @@ export class FormyComponent implements OnInit, OnChanges {
     if (!this.questions && !this.questionsJson) {
       return;
     }
-    if (!!this.questions && !!this.questionsJson){
+    if (!!this.questions && !!this.questionsJson) {
       console.log('Only questions input is used.')
     }
-    if (!this.questions && !!this.questionsJson){
+    if (!this.questions && !!this.questionsJson) {
       this.questions = JSON.parse(this.questionsJson);
     }
     this.form = this.qcs.toFormGroup(this.questions);
@@ -36,13 +36,13 @@ export class FormyComponent implements OnInit, OnChanges {
     this.form.valueChanges.subscribe(val => {
       if (this.form.valid) {
         this.questions.forEach(p => {
-          if (p.controlType === 'multiple'){
+          if (p.controlType === 'multiple') {
             const checkArray: FormArray = this.form.get(p.key) as FormArray;
             for (let index = 0; index < p.options.length; index++) {
-              let option = checkArray.controls.filter((c: any)=>c.name === p.options[index].key)[0];
+              let option = checkArray.controls.filter((c: any) => c.name === p.options[index].key)[0];
               p.options[index].value = !!option;
             }
-          }else{
+          } else {
             p.value = this.form.controls[p.key].value;
           }
         });
@@ -53,13 +53,13 @@ export class FormyComponent implements OnInit, OnChanges {
     });
   }
 
-  checkForm(){
+  checkForm() {
     this.form.markAllAsTouched();
     return this.form.valid;
   }
-  checkFormAndEmit(){
+  checkFormAndEmit() {
     this.form.markAllAsTouched();
-    if (this.form.valid){
+    if (this.form.valid) {
       this.onChange.emit(this.questions);
     } else {
       this.onChange.emit(undefined);
@@ -76,12 +76,21 @@ export class FormyComponent implements OnInit, OnChanges {
     if (!question.condition) {
       return true;
     }
-    const key = question.condition.split('=')[0];
-    const value = question.condition.split('=')[1];
+    let igualdad = '=';
+    if (question.condition.includes('<='))
+      igualdad = '<='
+    if (question.condition.includes('>='))
+      igualdad = '>='
+    const key = question.condition.split(igualdad)[0];
+    const value = question.condition.split(igualdad)[1];
     if (!this.form.controls[key]) {
       return true;
     }
-    const meetCondition = `${this.form.controls[key].value}` === value;
+    let meetCondition = `${this.form.controls[key].value}` === value;
+    if (igualdad==='<=')
+        meetCondition = `${this.form.controls[key].value}` <= value;
+    if (igualdad==='>=')
+        meetCondition = `${this.form.controls[key].value}` >= value;
     if (!meetCondition) {
       this.form.controls[question.key].setValidators(null);
       this.form.controls[question.key].updateValueAndValidity();

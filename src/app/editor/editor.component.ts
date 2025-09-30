@@ -13,7 +13,7 @@ export class EditorComponent {
   questions: FormyInputBase<any>[] = [{
     type: '',
     controlType: 'checkbox',
-    key: '3',
+    key: 'input1',
     label: 'Checkbox',
     options: undefined,
     order: 0,
@@ -27,12 +27,13 @@ export class EditorComponent {
     options: [{key:'Multi 1',value:true},{key:'Multi 2',value:true}],
     order: 1,
     required: true,
-    value: ''
-  }
-  /*   {
+    value: '',
+    condition:'input1==true'
+  },
+   {
       type: 'text',
       controlType: 'textbox',
-      key: '1',
+      key: 'input2',
       label: 'Texto corto',
       options: undefined,
       order: 0,
@@ -40,8 +41,8 @@ export class EditorComponent {
       value: '',
       placeholder: 'Esto es una ayuda.',
       pattern: '[a-zA-Z]'
-    },
-    {
+    }
+    /*  {
       type: '',
       controlType: 'scale',
       key: '10',

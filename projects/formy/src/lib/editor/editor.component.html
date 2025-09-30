@@ -192,8 +192,13 @@
           <label for="help">Condición</label>
           <input [(ngModel)]="question.condition" type="text" class="form-control" id="condition"
             aria-describedby="conditionHelp">
-          <small id="conditionHelp" class="form-text text-muted">Condición para que se muestre el campo:
-            claveComponente=valor. Tambien acepta '<=' y '>='. </small>
+          <small id="conditionHelp" class="form-text text-muted">Condición para que se muestre el campo. Acepta ==, <, >, <=, >=. Se pueden usar operadores lógicos && o AND, || u OR. 
+            También se pueden usar paréntesis para lógicas más complejas. Si el valor es una cadena se deben poner comillas simples. Ej: inputTexto=="valor". Ejemplos: </small>
+            <small id="conditionHelp" class="form-text text-muted">
+              inputTexto == "un valor" <br>
+              inputTexto == "un valor" AND inputCheckbox==true <br>
+              (inputTexto == "un valor" AND inputCheckbox==true) OR inputNumero>5 <br>
+            </small>
         </div>
 
         <div class="custom-control custom-switch">
@@ -207,7 +212,7 @@
       </div>
     </div>
     <div class="component" *ngIf="!question.selected" (click)="select(question)">
-      <lib-formy [questions]="[question]"></lib-formy>
+      <lib-formy [questions]="[question]" [checkConditions]="false"></lib-formy>
     </div>
     <div *ngIf="question.selected">
       <button (click)="upQuestion(question)" class="btn btn-info" *ngIf="question.order !== 0">Arriba

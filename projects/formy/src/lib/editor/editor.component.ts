@@ -124,7 +124,8 @@ export class FormyEditorComponent implements OnInit {
         question.error = true;
         this.errors.set(`Clave ${question.key} duplicada`, question);
       }
-      if (!!question.condition) {
+      //ya no validamos la condicion.
+    /*   if (!!question.condition) {
         let igualdad='=';
         if (question.condition.includes('<='))
           igualdad = '<='
@@ -140,7 +141,7 @@ export class FormyEditorComponent implements OnInit {
           question.error = true;
           this.errors.set(`Falta un valor a la condición "${question.condition}"`, question);
         }
-      }
+      } */
 
       if (question.controlType === 'dropdown' && (!question.options || question.options.length === 0)) {
         question.error = true;
@@ -272,7 +273,8 @@ export class FormyEditorComponent implements OnInit {
   }
 
   validar() {
-    this.testValid = this.formy.checkForm();
+    if ( this.formy)
+      this.testValid = this.formy.checkForm();
   }
 
 

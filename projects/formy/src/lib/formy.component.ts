@@ -13,6 +13,7 @@ export class FormyComponent implements OnInit, OnChanges {
   @Input() questions: FormyInputBase<string>[];
   @Input() questionsJson: string;
   @Input() disabled = false;
+  @Input() checkConditions = true;
   @Output() onChange: EventEmitter<any> = new EventEmitter();
   form: FormGroup;
   payLoad = '';
@@ -72,25 +73,49 @@ export class FormyComponent implements OnInit, OnChanges {
     }
   }
 
+
+  evaluateLogicalExpression(expression, values) {
+    // Replace AND, OR with JavaScript logical operators
+    let formattedExpression = expression
+      .replace(/\s+/g, '') // Remove whitespace
+      .replace(/AND/g, '&&')
+      .replace(/OR/g, '||');
+    formattedExpression = formattedExpression
+      .replace(/<=/g, '<=') // Less than or equal
+      .replace(/>=/g, '>=') // Greater than or equal
+      .replace(/</g, '<') // Less than
+      .replace(/>/g, '>'); // Greater than
+    // Replace variables with their corresponding boolean values
+    for (const [key, value] of Object.entries(values)) {
+      const regex = new RegExp(`\\b${key}\\b`, 'g');
+      formattedExpression = formattedExpression.replace(regex, JSON.stringify(value));
+    }
+    // Evaluate the expression safely
+    try {
+      return Function('"use strict";return (' + formattedExpression + ')')();
+    } 
+    catch {
+      console.log('Malformed expression or values: ' + expression)
+      console.log(values);
+      return true;
+    }
+  }
+
   checkCondition(question: FormyInputBase<any>) {
-    if (!question.condition) {
+    if (!question.condition || !this.checkConditions) {
       return true;
     }
-    let igualdad = '=';
-    if (question.condition.includes('<='))
-      igualdad = '<='
-    if (question.condition.includes('>='))
-      igualdad = '>='
-    const key = question.condition.split(igualdad)[0];
-    const value = question.condition.split(igualdad)[1];
-    if (!this.form.controls[key]) {
-      return true;
-    }
-    let meetCondition = `${this.form.controls[key].value}` === value;
-    if (igualdad==='<=')
-        meetCondition = `${this.form.controls[key].value}` <= value;
-    if (igualdad==='>=')
-        meetCondition = `${this.form.controls[key].value}` >= value;
+
+
+    const values = {};
+    this.questions.forEach(p => {
+      if (!!this.form.controls[p.key].value){
+        values[p.key] = this.form.controls[p.key].value;
+      }else{
+        values[p.key] = undefined;
+      }
+    });
+    let meetCondition = this.evaluateLogicalExpression(question.condition, values);
     if (!meetCondition) {
       this.form.controls[question.key].setValidators(null);
       this.form.controls[question.key].updateValueAndValidity();
